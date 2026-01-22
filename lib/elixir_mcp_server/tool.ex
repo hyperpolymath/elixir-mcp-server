@@ -43,7 +43,7 @@ defmodule ElixirMcpServer.Tool do
           {:ok, [
             %{
               type: "text",
-              text: "Weather in #{location}: 20°#{if units == "celsius", do: "C", else: "F"}"
+              text: "Weather in \#{location}: 20°\#{if units == "celsius", do: "C", else: "F"}"
             }
           ]}
         end
