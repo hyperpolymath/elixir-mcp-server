@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: PMPL-1.0-or-later
 (define-module meta
   (architecture-decisions
     ((adr-001
@@ -54,3 +55,5 @@
       "Avoid code duplication across projects"
       "Enable community contributions"
       "Provide stable API for hyperpolymath ecosystem")))
+
+(define opsm-link "OPSM link: Elixir tooling bridge for OPSM.")

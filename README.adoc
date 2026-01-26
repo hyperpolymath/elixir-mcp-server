@@ -128,3 +128,14 @@ This framework is useful for:
 == License
 
 PMPL-1.0-or-later - see link:LICENSE[LICENSE] file for details
+
+== OPSM Link
+
+[source]
+----
+OPSM Core
+  |
+  v
+elixir-mcp-server (Elixir tooling bridge for OPSM)
+
+----
