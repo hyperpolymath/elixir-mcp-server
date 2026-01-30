@@ -1,3 +1,4 @@
+;; SPDX-License-Identifier: PMPL-1.0-or-later
 (define-module state
   (metadata
     (version "0.1.0")
