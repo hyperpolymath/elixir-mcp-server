@@ -45,19 +45,20 @@ defmodule ElixirMcpServer.MixProject do
 
   defp package do
     [
-      licenses: ["PMPL-1.0-or-later"],
+      licenses: ["MPL-2.0"],
+      metadata: %{"pmpl" => "PMPL-1.0-or-later obligations still apply; see LICENSE/README"},
       links: %{
         "GitHub" => @source_url,
         "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
       },
-      files: ~w(lib .formatter.exs mix.exs README.adoc LICENSE CHANGELOG.md)
+      files: ~w(lib .formatter.exs mix.exs README.adoc README.md LICENSE CHANGELOG.md)
     ]
   end
 
   defp docs do
     [
       main: "ElixirMcpServer",
-      extras: ["README.adoc", "CHANGELOG.md"],
+      extras: ["README.md", "CHANGELOG.md"],
       source_ref: "v#{@version}",
       formatters: ["html"]
     ]
