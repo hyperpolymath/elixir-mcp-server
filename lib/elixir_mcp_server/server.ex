@@ -1,26 +1,47 @@
 defmodule ElixirMcpServer.Server do
   @moduledoc """
   Main MCP server GenServer.
+
+  This module manages the server state, handles message dispatch, 
+  and orchestrates the transport layer (currently stdio).
   """
   use GenServer
   require Logger
 
   alias ElixirMcpServer.Protocol
 
+  # STATE:
+  # - name: Server identity.
+  # - version: Implementation version.
+  # - tools: Map of {name => module} for registered tools.
+  # - resources: Map of {uri => module} for registered resources.
+  # - capabilities: MCP capabilities advertised during initialization.
   defstruct [:name, :version, :tools, :resources, :transport, :capabilities]
 
+  @doc """
+  Starts the MCP server GenServer.
+  """
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
 
+  @doc """
+  Dynamically registers a tool module with the running server.
+  """
   def register_tool(tool_module) do
     GenServer.call(__MODULE__, {:register_tool, tool_module})
   end
 
+  @doc """
+  Dynamically registers a resource module with the running server.
+  """
   def register_resource(resource_module) do
     GenServer.call(__MODULE__, {:register_resource, resource_module})
   end
 
+  @doc """
+  Stops the server.
+  """
   def stop do
     GenServer.stop(__MODULE__)
   end
@@ -48,7 +69,8 @@ defmodule ElixirMcpServer.Server do
 
   @impl true
   def handle_continue(:start_transport, state) do
-    # Start stdio loop in a separate process
+    # TRANSPORT: Start the stdio loop.
+    # In MCP, stdio is the primary transport for CLI-integrated servers.
     spawn_link(fn -> stdio_loop(state) end)
     {:noreply, state}
   end
@@ -73,6 +95,7 @@ defmodule ElixirMcpServer.Server do
     Enum.into(resource_modules, %{}, fn mod -> {mod.uri(), mod} end)
   end
 
+  # The stdio_loop reads from standard input line-by-line.
   defp stdio_loop(state) do
     case IO.read(:stdio, :line) do
       :eof ->
@@ -85,8 +108,10 @@ defmodule ElixirMcpServer.Server do
     end
   end
 
+  # DISPATCH: Handles individual MCP methods.
   defp handle_message(line, state) do
     case Protocol.decode(line) do
+      # INITIALIZE: Sent by the client to negotiate protocol version and capabilities.
       {:ok, %{"method" => "initialize", "id" => id}} ->
         response = Protocol.encode_response(%{
           "protocolVersion" => "2024-11-05",
@@ -98,6 +123,7 @@ defmodule ElixirMcpServer.Server do
         }, id)
         IO.puts(response)
 
+      # TOOLS/LIST: Returns the inventory of available tools and their schemas.
       {:ok, %{"method" => "tools/list", "id" => id}} ->
         tools = Enum.map(state.tools, fn {_name, mod} ->
           %{
@@ -109,6 +135,7 @@ defmodule ElixirMcpServer.Server do
         response = Protocol.encode_response(%{"tools" => tools}, id)
         IO.puts(response)
 
+      # TOOLS/CALL: Executes a specific tool with user-provided arguments.
       {:ok, %{"method" => "tools/call", "params" => %{"name" => tool_name, "arguments" => args}, "id" => id}} ->
         case Map.get(state.tools, tool_name) do
           nil ->
@@ -126,7 +153,7 @@ defmodule ElixirMcpServer.Server do
         end
 
       {:ok, _msg} ->
-        :ok  # Ignore unknown messages
+        :ok  # Ignore unknown/unsupported messages
 
       {:error, reason} ->
         Logger.error("Failed to decode message: #{inspect(reason)}")

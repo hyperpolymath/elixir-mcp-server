@@ -1,88 +1,49 @@
 defmodule ElixirMcpServer.Tool do
   @moduledoc """
-  Behavior for defining MCP tools.
+  Behavior definition for MCP Tools.
 
-  Tools are executable functions that can be called by the MCP client (e.g., Claude Code).
-  Each tool must implement this behavior to define its name, description, input schema,
-  and execution logic.
+  Any module that provides an executable function to an MCP client MUST 
+  implement this behavior. It defines the contract for how tools are 
+  discovered (name, description, schema) and executed.
 
-  ## Example
+  ## Required Callbacks
 
-      defmodule MyApp.Tools.GetWeather do
-        use ElixirMcpServer.Tool
+  - `name/0`: Must return a unique alphanumeric string (snake_case preferred).
+  - `description/0`: A concise summary used by the LLM to decide when to call the tool.
+  - `input_schema/0`: A JSON Schema (as a Map) defining the tool's parameters.
+  - `execute/2`: The core logic. Must return `{:ok, content_list}` or `{:error, reason}`.
 
-        @impl true
-        def name, do: "get_weather"
+  ## Execution Return Format
 
-        @impl true
-        def description, do: "Get current weather for a location"
-
-        @impl true
-        def input_schema do
-          %{
-            type: "object",
-            properties: %{
-              location: %{
-                type: "string",
-                description: "City name or zip code"
-              },
-              units: %{
-                type: "string",
-                enum: ["celsius", "fahrenheit"],
-                description: "Temperature units"
-              }
-            },
-            required: ["location"]
-          }
-        end
-
-        @impl true
-        def execute(%{"location" => location} = args, _context) do
-          units = Map.get(args, "units", "celsius")
-          # Fetch weather data...
-          {:ok, [
-            %{
-              type: "text",
-              text: "Weather in \#{location}: 20°\#{if units == "celsius", do: "C", else: "F"}"
-            }
-          ]}
-        end
-      end
+  The `content_list` should contain maps representing content blocks:
+  ```elixir
+  [
+    %{type: "text", text: "Results go here..."}
+  ]
+  ```
   """
 
   @doc """
-  Returns the tool name. Must be unique within the server.
+  Returns the tool name. Must be unique within the server instance.
   """
   @callback name() :: String.t()
 
   @doc """
-  Returns a human-readable description of what the tool does.
+  Returns a human-readable description of the tool's purpose and side effects.
   """
   @callback description() :: String.t()
 
   @doc """
-  Returns the JSON Schema for the tool's input parameters.
-
-  Must be a valid JSON Schema object defining the expected input structure.
+  Returns the JSON Schema map for the tool's input parameters.
   """
   @callback input_schema() :: map()
 
   @doc """
-  Executes the tool with the given arguments and context.
-
-  ## Arguments
-
-  - `args` - Map of input arguments matching the input_schema
-  - `context` - Execution context (reserved for future use)
-
-  ## Returns
-
-  - `{:ok, content}` - Success with content list
-  - `{:error, reason}` - Failure with error reason
-
-  Content is a list of content blocks, where each block is a map with:
-  - `type` - "text", "image", or "resource"
-  - Additional fields depending on type
+  Executes the tool logic.
+  
+  Arguments:
+  - `args`: Map of user-supplied arguments (validated against the schema).
+  - `context`: Reserved for future use (e.g., authentication tokens, trace IDs).
   """
   @callback execute(args :: map(), context :: map()) ::
               {:ok, [map()]} | {:error, term()}

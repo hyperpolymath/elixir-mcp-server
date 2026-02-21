@@ -23,3 +23,8 @@ be found at <https://hexdocs.pm/elixir_mcp_server>.
 > (the only SPDX identifier accepted on Hex), but this repository's source code
 > is governed by **PMPL‑1.0-or-later**; consult `LICENSE` for the additional
 > obligations that apply when consuming the code outside the Hex package.
+
+
+## Architecture
+
+See [TOPOLOGY.md](TOPOLOGY.md) for a visual architecture map and completion dashboard.
