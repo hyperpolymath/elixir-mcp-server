@@ -1,5 +1,7 @@
 = elixir-mcp-server
 
+image:https://img.shields.io/badge/elixir-%E2%89%A51.14-purple[Elixir,link=https://elixir-lang.org/] image:https://img.shields.io/badge/license-MPL--2.0-green[License: MPL-2.0,link=LICENSE] image:https://img.shields.io/endpoint?url=https://mcpampel.com/badge/hyperpolymath/elixir-mcp-server.json[MCPAmpel,link=https://mcpampel.com/repo/hyperpolymath/elixir-mcp-server]
+
 **Model Context Protocol (MCP) server framework for Elixir/BEAM**
 
 A complete, production-ready implementation of the https://modelcontextprotocol.io[Model Context Protocol] that enables Elixir applications to integrate with Claude Code and other MCP clients.
