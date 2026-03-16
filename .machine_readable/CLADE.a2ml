@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Clade declaration — part of the gv-clade-index registry
+# See: https://github.com/hyperpolymath/gv-clade-index
+
+[identity]
+uuid = "94b5058d-40cd-5eaf-a768-adc0bae18920"
+primary-forge = "github"
+primary-owner = "hyperpolymath"
+canonical-name = "elixir-mcp-server"
+prefixed-name = "dx-elixir-mcp-server"
+
+[clade]
+primary = "dx"
+secondary = []
+assigned = "2026-03-16"
+rationale = ""
+
+[forges]
+github = "hyperpolymath/elixir-mcp-server"
+gitlab = "hyperpolymath/elixir-mcp-server"
+bitbucket = "hyperpolymath/elixir-mcp-server"
+
+[lineage]
+type = "standalone"
+parent = "MCP server for Elixir — BEAM layer for BoJ"
+born = "2026-03-16"
