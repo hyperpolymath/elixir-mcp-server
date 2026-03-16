@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
 defmodule ElixirMcpServer do
   @moduledoc """
   Model Context Protocol (MCP) server framework for Elixir.

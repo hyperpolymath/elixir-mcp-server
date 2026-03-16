@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
 defmodule ElixirMcpServer.Server do
   @moduledoc """
   Main MCP server GenServer.
