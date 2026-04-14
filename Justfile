@@ -16,6 +16,8 @@ set dotenv-load := true
 set positional-arguments := true
 
 # Project metadata - CUSTOMIZE THESE
+import? "contractile.just"
+
 project := "RSR-template-repo"
 version := "0.1.0"
 tier := "infrastructure"  # 1 | 2 | infrastructure
