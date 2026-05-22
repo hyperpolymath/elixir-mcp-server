@@ -46,7 +46,7 @@ defmodule ElixirMcpServer.MixProject do
   defp package do
     [
       licenses: ["MPL-2.0"],
-      metadata: %{"pmpl" => "PMPL-1.0-or-later obligations still apply; see LICENSE/README"},
+      metadata: %{"pmpl" => "MPL-2.0 obligations still apply; see LICENSE/README"},
       links: %{
         "GitHub" => @source_url,
         "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"

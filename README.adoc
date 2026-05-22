@@ -129,7 +129,7 @@ This framework is useful for:
 
 == License
 
-PMPL-1.0-or-later - see link:LICENSE[LICENSE] file for details
+MPL-2.0 - see link:LICENSE[LICENSE] file for details
 
 == OPSM Link
 

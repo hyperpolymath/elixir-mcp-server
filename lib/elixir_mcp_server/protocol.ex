@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: PMPL-1.0-or-later
+# SPDX-License-Identifier: MPL-2.0
 defmodule ElixirMcpServer.Protocol do
   @moduledoc """
   JSON-RPC 2.0 protocol implementation for the Model Context Protocol (MCP).
