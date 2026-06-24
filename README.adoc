@@ -1,4 +1,8 @@
+// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 = elixir-mcp-server
+image:https://img.shields.io/badge/OpenSSF-Best_Practices-green?logo=openssourcesecurity[OpenSSF Best Practices,link="https://www.bestpractices.dev/en/projects/new?repo_url=https://github.com/hyperpolymath/elixir-mcp-server"]
+
 
 image:https://img.shields.io/badge/elixir-%E2%89%A51.14-purple[Elixir,link=https://elixir-lang.org/] image:https://img.shields.io/badge/license-MPL--2.0-green[License: MPL-2.0,link=LICENSE] image:https://img.shields.io/endpoint?url=https://mcpampel.com/badge/hyperpolymath/elixir-mcp-server.json[MCPAmpel,link=https://mcpampel.com/repo/hyperpolymath/elixir-mcp-server]
 
